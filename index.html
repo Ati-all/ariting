@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ariting - 감성 글쓰기 &amp; 커뮤니티 플랫폼</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Noto Serif KR & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Serif+KR:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Noto Serif KR', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fdfbf7',
+                            100: '#f7f2e9',
+                            200: '#eee3d1',
+                            500: '#a88967',
+                            600: '#8c6f4e',
+                            800: '#4a3825',
+                            900: '#2c1e11',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fcfbfa;
+            color: #2c1e11;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1ebd9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5b49b;
+            border-radius: 3px;
+        }
+        .editor-content:empty:before {
+            content: attr(data-placeholder);
+            color: #a0aec0;
+            cursor: text;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.sticky{position:sticky}.inset-0{inset:0px}.bottom-6{bottom:1.5rem}.right-6{right:1.5rem}.top-0{top:0px}.z-40{z-index:40}.z-50{z-index:50}.mx-1{margin-left:0.25rem;margin-right:0.25rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-0.25rem}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mr-1{margin-right:0.25rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mb-3{margin-bottom:0.75rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-8{height:2rem}.max-h-32{max-height:8rem}.max-h-\[85vh\]{max-height:85vh}.min-h-screen{min-height:100vh}.min-h-\[360px\]{min-height:360px}.w-10{width:2.5rem}.w-28{width:7rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-full{width:100%}.w-px{width:1px}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.flex-grow{flex-grow:1}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-1\.5{gap:0.375rem}.gap-4{gap:1rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.self-end{align-self:flex-end}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-0{border-width:0px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-amber-200\/60{border-color:rgb(253 230 138 / 0.6)}.border-blue-200\/60{border-color:rgb(191 219 254 / 0.6)}.border-brand-100{--tw-border-opacity:1;border-color:rgb(247 242 233 / var(--tw-border-opacity, 1))}.border-brand-200{--tw-border-opacity:1;border-color:rgb(238 227 209 / var(--tw-border-opacity, 1))}.border-brand-800{--tw-border-opacity:1;border-color:rgb(74 56 37 / var(--tw-border-opacity, 1))}.border-emerald-200\/60{border-color:rgb(167 243 208 / 0.6)}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.bg-amber-50\/50{background-color:rgb(255 251 235 / 0.5)}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-blue-50\/50{background-color:rgb(239 246 255 / 0.5)}.bg-brand-100{--tw-bg-opacity:1;background-color:rgb(247 242 233 / var(--tw-bg-opacity, 1))}.bg-brand-200{--tw-bg-opacity:1;background-color:rgb(238 227 209 / var(--tw-bg-opacity, 1))}.bg-brand-50{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.bg-brand-50\/30{background-color:rgb(253 251 247 / 0.3)}.bg-brand-50\/40{background-color:rgb(253 251 247 / 0.4)}.bg-brand-50\/50{background-color:rgb(253 251 247 / 0.5)}.bg-brand-50\/60{background-color:rgb(253 251 247 / 0.6)}.bg-brand-500{--tw-bg-opacity:1;background-color:rgb(168 137 103 / var(--tw-bg-opacity, 1))}.bg-brand-800{--tw-bg-opacity:1;background-color:rgb(74 56 37 / var(--tw-bg-opacity, 1))}.bg-brand-900{--tw-bg-opacity:1;background-color:rgb(44 30 17 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/50{background-color:rgb(236 253 245 / 0.5)}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-4{padding-bottom:1rem}.pb-6{padding-bottom:1.5rem}.pl-2{padding-left:0.5rem}.pl-4{padding-left:1rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.font-sans{font-family:Inter, sans-serif}.font-serif{font-family:Noto Serif KR, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-brand-500{--tw-text-opacity:1;color:rgb(168 137 103 / var(--tw-text-opacity, 1))}.text-brand-600{--tw-text-opacity:1;color:rgb(140 111 78 / var(--tw-text-opacity, 1))}.text-brand-800{--tw-text-opacity:1;color:rgb(74 56 37 / var(--tw-text-opacity, 1))}.text-brand-900{--tw-text-opacity:1;color:rgb(44 30 17 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.placeholder-slate-300::placeholder{--tw-placeholder-opacity:1;color:rgb(203 213 225 / var(--tw-placeholder-opacity, 1))}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-brand-50:hover{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.hover\:bg-brand-600:hover{--tw-bg-opacity:1;background-color:rgb(140 111 78 / var(--tw-bg-opacity, 1))}.hover\:bg-brand-900:hover{--tw-bg-opacity:1;background-color:rgb(44 30 17 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:text-brand-800:hover{--tw-text-opacity:1;color:rgb(74 56 37 / var(--tw-text-opacity, 1))}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-brand-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(168 137 103 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:w-32{width:8rem}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.sm\:self-auto{align-self:auto}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.sticky{position:sticky}.inset-0{inset:0px}.bottom-6{bottom:1.5rem}.right-6{right:1.5rem}.top-0{top:0px}.z-40{z-index:40}.z-50{z-index:50}.mx-1{margin-left:0.25rem;margin-right:0.25rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-0.25rem}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mr-1{margin-right:0.25rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-16{height:4rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-8{height:2rem}.max-h-32{max-height:8rem}.max-h-\[85vh\]{max-height:85vh}.min-h-screen{min-height:100vh}.min-h-\[360px\]{min-height:360px}.w-10{width:2.5rem}.w-28{width:7rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-full{width:100%}.w-px{width:1px}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.flex-grow{flex-grow:1}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-1\.5{gap:0.375rem}.gap-4{gap:1rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.self-end{align-self:flex-end}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-0{border-width:0px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-amber-200\/60{border-color:rgb(253 230 138 / 0.6)}.border-blue-200\/60{border-color:rgb(191 219 254 / 0.6)}.border-brand-100{--tw-border-opacity:1;border-color:rgb(247 242 233 / var(--tw-border-opacity, 1))}.border-brand-200{--tw-border-opacity:1;border-color:rgb(238 227 209 / var(--tw-border-opacity, 1))}.border-brand-800{--tw-border-opacity:1;border-color:rgb(74 56 37 / var(--tw-border-opacity, 1))}.border-emerald-200\/60{border-color:rgb(167 243 208 / 0.6)}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.bg-amber-50\/50{background-color:rgb(255 251 235 / 0.5)}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-blue-50\/50{background-color:rgb(239 246 255 / 0.5)}.bg-brand-100{--tw-bg-opacity:1;background-color:rgb(247 242 233 / var(--tw-bg-opacity, 1))}.bg-brand-200{--tw-bg-opacity:1;background-color:rgb(238 227 209 / var(--tw-bg-opacity, 1))}.bg-brand-50{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.bg-brand-50\/30{background-color:rgb(253 251 247 / 0.3)}.bg-brand-50\/40{background-color:rgb(253 251 247 / 0.4)}.bg-brand-50\/50{background-color:rgb(253 251 247 / 0.5)}.bg-brand-50\/60{background-color:rgb(253 251 247 / 0.6)}.bg-brand-500{--tw-bg-opacity:1;background-color:rgb(168 137 103 / var(--tw-bg-opacity, 1))}.bg-brand-800{--tw-bg-opacity:1;background-color:rgb(74 56 37 / var(--tw-bg-opacity, 1))}.bg-brand-900{--tw-bg-opacity:1;background-color:rgb(44 30 17 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/50{background-color:rgb(236 253 245 / 0.5)}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-4{padding-bottom:1rem}.pb-6{padding-bottom:1.5rem}.pl-2{padding-left:0.5rem}.pl-4{padding-left:1rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.text-center{text-align:center}.font-sans{font-family:Inter, sans-serif}.font-serif{font-family:Noto Serif KR, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-brand-500{--tw-text-opacity:1;color:rgb(168 137 103 / var(--tw-text-opacity, 1))}.text-brand-600{--tw-text-opacity:1;color:rgb(140 111 78 / var(--tw-text-opacity, 1))}.text-brand-800{--tw-text-opacity:1;color:rgb(74 56 37 / var(--tw-text-opacity, 1))}.text-brand-900{--tw-text-opacity:1;color:rgb(44 30 17 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.placeholder-slate-300::placeholder{--tw-placeholder-opacity:1;color:rgb(203 213 225 / var(--tw-placeholder-opacity, 1))}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-brand-50:hover{--tw-bg-opacity:1;background-color:rgb(253 251 247 / var(--tw-bg-opacity, 1))}.hover\:bg-brand-600:hover{--tw-bg-opacity:1;background-color:rgb(140 111 78 / var(--tw-bg-opacity, 1))}.hover\:bg-brand-900:hover{--tw-bg-opacity:1;background-color:rgb(44 30 17 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.hover\:text-brand-800:hover{--tw-text-opacity:1;color:rgb(74 56 37 / var(--tw-text-opacity, 1))}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-brand-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(168 137 103 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:w-32{width:8rem}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.sm\:self-auto{align-self:auto}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="min-h-screen flex flex-col font-sans antialiased text-slate-800">
+
+<!-- Firebase SDKs -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, doc, addDoc, updateDoc, onSnapshot, arrayUnion, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Firebase Global Setup
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'ariting-app';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' 
+        ? JSON.parse(__firebase_config) 
+        : {
+            apiKey: "demo-api-key",
+            authDomain: "demo-app.firebaseapp.com",
+            projectId: "demo-app",
+            storageBucket: "demo-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.db = db;
+    window.auth = auth;
+    window.appId = appId;
+    window.firestoreLib = { collection, doc, addDoc, updateDoc, onSnapshot, arrayUnion, serverTimestamp };
+
+    // Initialize Auth & Default Nickname
+    async function initAuth() {
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        } catch (e) {
+            console.warn("Auth initialization fallback to anonymous login:", e);
+            try { await signInAnonymously(auth); } catch(err){}
+        }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            window.currentUser = user;
+            if (!localStorage.getItem('ariting_nickname')) {
+                const randomNick = '익명작가_' + Math.floor(1000 + Math.random() * 9000);
+                localStorage.setItem('ariting_nickname', randomNick);
+            }
+            document.getElementById('user-nickname-input').value = localStorage.getItem('ariting_nickname');
+            console.log("Logged in as user:", user.uid);
+            window.loadCommunityPosts(); // Start listening to community posts
+        }
+    });
+
+    initAuth();
+</script>
+
+<!-- Header Navigation -->
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-brand-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('write')">
+                <span class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white font-serif text-xl font-bold shadow-sm">a</span>
+                <div>
+                    <h1 class="font-serif text-2xl font-bold tracking-tight text-brand-900">ariting</h1>
+                    <p class="text-[10px] text-brand-600 tracking-wider -mt-1 uppercase font-semibold">Creative Writing Platform</p>
+                </div>
+            </div>
+
+            <!-- Tab Buttons -->
+            <nav class="hidden md:flex space-x-1 sm:space-x-2">
+                <button onclick="switchTab('write')" id="tab-btn-write" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 bg-brand-500 text-white shadow-sm">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>글 쓰기</span>
+                </button>
+                <button onclick="switchTab('coaching')" id="tab-btn-coaching" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 text-slate-600 hover:text-brand-800 hover:bg-brand-50">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>AI 코칭</span>
+                </button>
+                <button onclick="switchTab('community')" id="tab-btn-community" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 text-slate-600 hover:text-brand-800 hover:bg-brand-50">
+                    <i class="fa-solid fa-users"></i>
+                    <span>커뮤니티</span>
+                </button>
+                <button onclick="switchTab('story')" id="tab-btn-story" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 text-slate-600 hover:text-brand-800 hover:bg-brand-50">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>스토리 메이킹</span>
+                </button>
+            </nav>
+
+            <!-- User Nickname Settings -->
+            <div class="flex items-center space-x-2 border-l pl-4 border-brand-100">
+                <i class="fa-solid fa-circle-user text-brand-500 text-lg"></i>
+                <input type="text" id="user-nickname-input" onchange="updateNickname(this.value)" placeholder="작가 닉네임" class="w-28 sm:w-32 text-xs bg-brand-50 px-2 py-1.5 rounded border border-brand-200 focus:outline-none focus:ring-1 focus:ring-brand-500 font-medium text-brand-900">
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Bar -->
+    <div class="md:hidden flex justify-around border-t border-brand-100 bg-white py-2 px-2 text-xs">
+        <button onclick="switchTab('write')" id="mobile-tab-btn-write" class="flex flex-col items-center py-1 text-brand-600">
+            <i class="fa-solid fa-pen-nib text-base mb-0.5"></i>
+            <span>글쓰기</span>
+        </button>
+        <button onclick="switchTab('coaching')" id="mobile-tab-btn-coaching" class="flex flex-col items-center py-1 text-slate-500">
+            <i class="fa-solid fa-wand-magic-sparkles text-base mb-0.5"></i>
+            <span>AI코칭</span>
+        </button>
+        <button onclick="switchTab('community')" id="mobile-tab-btn-community" class="flex flex-col items-center py-1 text-slate-500">
+            <i class="fa-solid fa-users text-base mb-0.5"></i>
+            <span>커뮤니티</span>
+        </button>
+        <button onclick="switchTab('story')" id="mobile-tab-btn-story" class="flex flex-col items-center py-1 text-slate-500">
+            <i class="fa-solid fa-book-open text-base mb-0.5"></i>
+            <span>스토리</span>
+        </button>
+    </div>
+</header>
+
+<!-- Main Content Area -->
+<main class="max-w-5xl mx-auto px-4 py-6 sm:px-6 flex-grow w-full">
+
+    <!-- 1. 글 쓰기 탭 (Rich Text Editor) -->
+    <section id="tab-write" class="tab-content block space-y-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-brand-100 p-6 space-y-4">
+            <!-- Header Tools -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-brand-100">
+                <input type="text" id="editor-title" placeholder="제목을 입력하세요..." class="w-full text-2xl font-serif font-bold text-brand-900 placeholder-slate-300 focus:outline-none bg-transparent">
+                <div class="flex items-center space-x-2 self-end sm:self-auto">
+                    <button onclick="saveLocalDraft()" class="text-xs px-3 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all flex items-center space-x-1">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>임시 저장</span>
+                    </button>
+                    <button onclick="publishToCommunity()" class="text-xs px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white font-medium transition-all shadow-sm flex items-center space-x-1">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>커뮤니티 올리기</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="flex flex-wrap items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-100 text-slate-700">
+                <button onclick="formatDoc('bold')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="굵게"><i class="fa-solid fa-bold"></i></button>
+                <button onclick="formatDoc('italic')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="기울임"><i class="fa-solid fa-italic"></i></button>
+                <button onclick="formatDoc('underline')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="밑줄"><i class="fa-solid fa-underline"></i></button>
+                <button onclick="formatDoc('strikeThrough')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="취소선"><i class="fa-solid fa-strikethrough"></i></button>
+                <div class="h-4 w-px bg-brand-200 mx-1"></div>
+                <button onclick="formatDoc('justifyLeft')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="왼쪽 정렬"><i class="fa-solid fa-align-left"></i></button>
+                <button onclick="formatDoc('justifyCenter')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="가운데 정렬"><i class="fa-solid fa-align-center"></i></button>
+                <button onclick="formatDoc('justifyRight')" class="p-2 hover:bg-white rounded text-slate-700 hover:text-brand-800 transition-all" title="오른쪽 정렬"><i class="fa-solid fa-align-right"></i></button>
+                <div class="h-4 w-px bg-brand-200 mx-1"></div>
+                <!-- Font Size -->
+                <select onchange="formatDoc('fontSize', this.value)" class="text-xs bg-white border border-brand-200 rounded px-2 py-1 focus:outline-none">
+                    <option value="3">보통 크기</option>
+                    <option value="1">작게</option>
+                    <option value="5">크게</option>
+                    <option value="7">매우 크게</option>
+                </select>
+                <!-- Font Color -->
+                <div class="flex items-center space-x-1 pl-2">
+                    <label class="text-xs text-slate-500">글자색:</label>
+                    <input type="color" onchange="formatDoc('foreColor', this.value)" class="w-6 h-6 border-0 rounded cursor-pointer bg-transparent">
+                </div>
+            </div>
+
+            <!-- Content Editable Body -->
+            <div id="editor-body" contenteditable="true" data-placeholder="당신의 특별한 이야기를 적어내려가 보세요..." class="editor-content min-h-[360px] p-4 font-serif leading-relaxed text-slate-800 focus:outline-none text-lg"><br></div>
+
+            <div class="flex justify-between items-center pt-2 text-xs text-slate-400 border-t border-slate-100">
+                <span id="word-count-info">글자 수: 0자</span>
+                <span id="draft-status-info">편집 중...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. AI 코칭 탭 -->
+    <section id="tab-coaching" class="tab-content space-y-6 hidden">
+        <div class="bg-white rounded-2xl shadow-sm border border-brand-100 p-6 space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-serif font-bold text-brand-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-brand-500"></i>
+                        <span>AI 문장 코칭 &amp; 피드백</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">작성하신 글의 문체, 표현력, 맞춤법 및 감성을 심층 분석해 드립니다.</p>
+                </div>
+                <button onclick="analyzeTextWithAI()" id="ai-analyze-btn" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-medium text-sm transition-all shadow-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>분석 시작하기</span>
+                </button>
+            </div>
+
+            <div class="p-4 bg-brand-50/50 rounded-xl border border-brand-100">
+                <h3 class="text-xs font-bold text-brand-800 uppercase tracking-wider mb-2">분석 대상 원문</h3>
+                <div id="coaching-source-preview" class="text-sm font-serif text-slate-700 italic max-h-32 overflow-y-auto">(에디터에 작성된 글이 없습니다. 글 쓰기 탭에서 내용을 작성해 주세요.)</div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="coaching-loading" class="hidden py-12 text-center space-y-3">
+                <div class="inline-block animate-spin text-brand-500 text-3xl">
+                    <i class="fa-solid fa-circle-notch"></i>
+                </div>
+                <p class="text-sm font-medium text-brand-800">AI 문학 코치가 문장과 감성을 다듬고 있습니다...</p>
+            </div>
+
+            <!-- AI Coaching Results -->
+            <div id="coaching-result" class="hidden space-y-4 pt-2">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-amber-50/50 border border-amber-200/60 p-4 rounded-xl">
+                        <span class="text-xs font-bold text-amber-800 block mb-1"><i class="fa-solid fa-palette mr-1"></i> 문체 &amp; 감성 점수</span>
+                        <div id="score-tone" class="text-2xl font-serif font-bold text-amber-900">92점</div>
+                        <p id="desc-tone" class="text-xs text-amber-700 mt-1">따뜻하고 서정적인 표현이 돋보입니다.</p>
+                    </div>
+                    <div class="bg-blue-50/50 border border-blue-200/60 p-4 rounded-xl">
+                        <span class="text-xs font-bold text-blue-800 block mb-1"><i class="fa-solid fa-spell-check mr-1"></i> 문장 가독성</span>
+                        <div id="score-readability" class="text-2xl font-serif font-bold text-blue-900">상 (Excellent)</div>
+                        <p id="desc-readability" class="text-xs text-blue-700 mt-1">호흡이 안정적이며 전달력이 높습니다.</p>
+                    </div>
+                    <div class="bg-emerald-50/50 border border-emerald-200/60 p-4 rounded-xl">
+                        <span class="text-xs font-bold text-emerald-800 block mb-1"><i class="fa-solid fa-feather mr-1"></i> 추천 키워드</span>
+                        <div id="score-keywords" class="text-sm font-medium text-emerald-900 mt-1">여운, 기억, 계절</div>
+                        <p class="text-xs text-emerald-700 mt-1">어휘의 풍부함을 한층 넓혀보세요.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-brand-100 rounded-xl p-5 space-y-3">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center space-x-1.5">
+                        <i class="fa-solid fa-comment-dots text-brand-500"></i>
+                        <span>AI 맞춤 종합 피드백</span>
+                    </h4>
+                    <div id="coaching-feedback-text" class="text-sm text-slate-700 leading-relaxed font-serif whitespace-pre-line">
+                        코칭 결과가 여기에 표시됩니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 커뮤니티 탭 (Firebase Firestore 기반 영구 보존 & 실시간 공유) -->
+    <section id="tab-community" class="tab-content space-y-6 hidden">
+        <div class="flex justify-between items-center">
+            <div>
+                <h2 class="text-2xl font-serif font-bold text-brand-900">작가 커뮤니티</h2>
+                <p class="text-xs text-slate-500 mt-0.5">여러 작가님들이 실시간으로 공유한 소중한 이야기입니다.</p>
+            </div>
+            <button onclick="switchTab('write')" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-medium rounded-xl transition-all shadow-sm flex items-center space-x-1.5">
+                <i class="fa-solid fa-pen"></i>
+                <span>글쓰러 가기</span>
+            </button>
+        </div>
+
+        <!-- Post List Container -->
+        <div id="community-posts-list" class="space-y-4">
+                <div class="text-center py-16 bg-white rounded-2xl border border-brand-100">
+                    <i class="fa-solid fa-feather text-brand-300 text-4xl mb-3"></i>
+                    <p class="text-sm font-medium text-slate-600">아직 등록된 게시글이 없습니다.</p>
+                    <p class="text-xs text-slate-400 mt-1">첫 번째 작가가 되어 감성적인 글을 작성해보세요!</p>
+                </div>
+            </div>
+    </section>
+
+    <!-- 4. 스토리 메이킹 탭 -->
+    <section id="tab-story" class="tab-content space-y-6 hidden">
+        <div class="bg-white rounded-2xl shadow-sm border border-brand-100 p-6 space-y-5">
+            <div>
+                <h2 class="text-xl font-serif font-bold text-brand-900 flex items-center space-x-2">
+                    <i class="fa-solid fa-book-open text-brand-500"></i>
+                    <span>AI 자동 스토리 메이킹</span>
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">원하는 핵심 키워드와 간단한 줄거리를 입력하시면 AI가 흥미진진한 스토리를 완성합니다.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">핵심 키워드 (쉼표로 구분)</label>
+                    <input type="text" id="story-keywords" placeholder="예: 비 내리는 카페, 잊혀진 편지, 타임슬립" class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">개요 및 시놉시스</label>
+                    <textarea id="story-prompt" rows="3" placeholder="예: 우연히 집어든 오래된 책 속에서 발견된 편지 한 장으로부터 시작되는 이야기..." class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-1 focus:ring-brand-500"></textarea>
+                </div>
+                <button onclick="generateStoryWithAI()" id="generate-story-btn" class="w-full py-3 bg-brand-800 hover:bg-brand-900 text-white text-sm font-medium rounded-xl transition-all shadow-sm flex justify-center items-center space-x-2">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>스토리 생성하기</span>
+                </button>
+            </div>
+
+            <!-- Story Output -->
+            <div id="story-result-container" class="hidden pt-4 border-t border-brand-100 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 id="generated-story-title" class="font-serif font-bold text-lg text-brand-900">생성된 스토리</h3>
+                    <button onclick="copyGeneratedStoryToEditor()" class="text-xs text-brand-600 hover:text-brand-800 bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-200 flex items-center space-x-1">
+                        <i class="fa-solid fa-file-import"></i>
+                        <span>에디터로 가져오기</span>
+                    </button>
+                </div>
+                <div id="generated-story-body" class="p-5 bg-brand-50/40 rounded-xl border border-brand-100 font-serif leading-relaxed text-slate-800 text-sm whitespace-pre-line">
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Community Post Detail Modal -->
+<div id="post-modal" class="fixed inset-0 z-50 hidden bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-brand-100 overflow-hidden animate-fade-in">
+        <!-- Modal Header -->
+        <div class="p-5 border-b border-brand-100 flex justify-between items-center bg-brand-50/30">
+            <div class="flex items-center space-x-2">
+                <span class="w-8 h-8 rounded-full bg-brand-100 text-brand-800 font-serif flex items-center justify-center text-sm font-bold" id="modal-author-avatar">작</span>
+                <div>
+                    <h3 id="modal-title" class="font-serif font-bold text-lg text-brand-900">게시글 제목</h3>
+                    <div class="text-[11px] text-slate-400 flex items-center space-x-2">
+                        <span id="modal-author">작가명</span>
+                        <span>•</span>
+                        <span id="modal-date">작성일시</span>
+                    </div>
+                </div>
+            </div>
+            <button onclick="closePostModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+            <div id="modal-content" class="font-serif text-slate-800 leading-relaxed text-base whitespace-pre-line border-b border-brand-100 pb-6">
+                게시글 내용...
+            </div>
+
+            <!-- Like Button -->
+            <div class="flex items-center space-x-4">
+                <button onclick="likeCurrentPost()" class="px-4 py-2 rounded-full border border-rose-200 text-rose-600 hover:bg-rose-50 transition-all text-xs font-medium flex items-center space-x-1.5">
+                    <i class="fa-solid fa-heart"></i>
+                    <span id="modal-likes-count">좋아요 0</span>
+                </button>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="space-y-4 pt-2">
+                <h4 class="font-bold text-slate-800 text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-comments text-brand-500"></i>
+                    <span>댓글</span>
+                    <span id="modal-comments-count" class="text-xs font-normal text-slate-400">(0)</span>
+                </h4>
+
+                <!-- Write Comment -->
+                <div class="flex space-x-2">
+                    <input type="text" id="comment-input" placeholder="따뜻한 댓글을 남겨보세요..." class="flex-grow text-xs px-3.5 py-2.5 rounded-xl border border-brand-200 focus:outline-none focus:ring-1 focus:ring-brand-500">
+                    <button onclick="submitComment()" class="px-4 py-2.5 bg-brand-500 hover:bg-brand-600 text-white text-xs font-medium rounded-xl transition-all">등록</button>
+                </div>
+
+                <!-- Comment List -->
+                <div id="modal-comments-list" class="space-y-3 pt-2">
+                    <p class="text-xs text-slate-400 italic">아직 댓글이 없습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Message -->
+<div id="toast-message" class="fixed bottom-6 right-6 z-50 hidden bg-brand-900 text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-brand-800 flex items-center space-x-2">
+    <i class="fa-solid fa-circle-check text-brand-500 text-sm"></i>
+    <span id="toast-text">저장되었습니다.</span>
+</div>
+
+<script>
+    // Global State
+    let currentActiveTab = 'write';
+    let currentPostId = null;
+    let localPosts = [];
+
+    // Initialize App
+    window.onload = function() {
+        setupEditor();
+        loadLocalDraft();
+        updateWordCount();
+    };
+
+    // Tab Switcher
+    function switchTab(tabId) {
+        currentActiveTab = tabId;
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+        // Style tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.className = "tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 text-slate-600 hover:text-brand-800 hover:bg-brand-50";
+        });
+        const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+        if(activeBtn) {
+            activeBtn.className = "tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center space-x-2 bg-brand-500 text-white shadow-sm";
+        }
+
+        // Coaching Preview Refresh
+        if(tabId === 'coaching') {
+            const editorContent = document.getElementById('editor-body').innerText.trim();
+            document.getElementById('coaching-source-preview').innerText = editorContent || "(에디터에 작성된 글이 없습니다. 글 쓰기 탭에서 내용을 작성해 주세요.)";
+        }
+    }
+
+    // Rich Text Formatting
+    function formatDoc(cmd, value = null) {
+        document.execCommand(cmd, false, value);
+        document.getElementById('editor-body').focus();
+        updateWordCount();
+    }
+
+    function setupEditor() {
+        const editor = document.getElementById('editor-body');
+        editor.addEventListener('input', () => {
+            updateWordCount();
+            document.getElementById('draft-status-info').innerText = "편집 중...";
+        });
+    }
+
+    function updateWordCount() {
+        const text = document.getElementById('editor-body').innerText || "";
+        const count = text.trim().length;
+        document.getElementById('word-count-info').innerText = `글자 수: ${count}자`;
+    }
+
+    // Nickname Handling
+    function updateNickname(val) {
+        if(!val.trim()) return;
+        localStorage.setItem('ariting_nickname', val.trim());
+        showToast("닉네임이 변경되었습니다.");
+    }
+
+    function getNickname() {
+        return localStorage.getItem('ariting_nickname') || "익명작가";
+    }
+
+    // Local Draft Storage
+    function saveLocalDraft() {
+        const title = document.getElementById('editor-title').value;
+        const body = document.getElementById('editor-body').innerHTML;
+        localStorage.setItem('ariting_draft_title', title);
+        localStorage.setItem('ariting_draft_body', body);
+        document.getElementById('draft-status-info').innerText = "임시 저장됨 (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
+        showToast("글이 브라우저에 임시 저장되었습니다.");
+    }
+
+    function loadLocalDraft() {
+        const title = localStorage.getItem('ariting_draft_title');
+        const body = localStorage.getItem('ariting_draft_body');
+        if (title) document.getElementById('editor-title').value = title;
+        if (body) document.getElementById('editor-body').innerHTML = body;
+    }
+
+    // Firebase Firestore Persistence & Community Sync
+    window.loadCommunityPosts = function() {
+        const { collection, onSnapshot, doc } = window.firestoreLib;
+        const postsCollection = collection(window.db, 'artifacts', window.appId, 'public', 'data', 'posts');
+
+        onSnapshot(postsCollection, (snapshot) => {
+            localPosts = [];
+            snapshot.forEach((doc) => {
+                localPosts.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Sort by createdAt descending
+            localPosts.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+            renderCommunityPosts();
+
+            // Refresh modal if active
+            if (currentPostId) {
+                const updatedPost = localPosts.find(p => p.id === currentPostId);
+                if (updatedPost) renderPostModal(updatedPost);
+            }
+        }, (error) => {
+            console.error("Error loading community posts:", error);
+            renderCommunityFallback();
+        });
+    };
+
+    // Publish Post to Firestore (Persistent for everyone)
+    async function publishToCommunity() {
+        const title = document.getElementById('editor-title').value.trim();
+        const contentHtml = document.getElementById('editor-body').innerHTML.trim();
+        const contentText = document.getElementById('editor-body').innerText.trim();
+
+        if (!title || !contentText) {
+            showToast("제목과 내용을 입력해 주세요.");
+            return;
+        }
+
+        const author = getNickname();
+        const { collection, addDoc } = window.firestoreLib;
+
+        try {
+            const postsCollection = collection(window.db, 'artifacts', window.appId, 'public', 'data', 'posts');
+            await addDoc(postsCollection, {
+                title: title,
+                content: contentHtml,
+                author: author,
+                authorUid: window.currentUser ? window.currentUser.uid : 'anonymous',
+                createdAt: Date.now(),
+                likes: 0,
+                comments: []
+            });
+
+            showToast("커뮤니티에 게시글이 영구 등록되었습니다!");
+            switchTab('community');
+        } catch (e) {
+            console.error("Failed to publish post:", e);
+            showToast("게시글 등록에 실패했습니다.");
+        }
+    }
+
+    // Render Community Post List
+    function renderCommunityPosts() {
+        const container = document.getElementById('community-posts-list');
+        if (localPosts.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-16 bg-white rounded-2xl border border-brand-100">
+                    <i class="fa-solid fa-feather text-brand-300 text-4xl mb-3"></i>
+                    <p class="text-sm font-medium text-slate-600">아직 등록된 게시글이 없습니다.</p>
+                    <p class="text-xs text-slate-400 mt-1">첫 번째 작가가 되어 감성적인 글을 작성해보세요!</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = localPosts.map(post => {
+            const dateStr = post.createdAt ? new Date(post.createdAt).toLocaleDateString() : '방금 전';
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content || '';
+            const plainContent = tempDiv.innerText || tempDiv.textContent || '';
+            const commentsCount = post.comments ? post.comments.length : 0;
+
+            return `
+                <div onclick="openPostModal('${post.id}')" class="bg-white p-5 rounded-2xl border border-brand-100 shadow-sm hover:shadow-md transition-all cursor-pointer space-y-3 group">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-serif font-bold text-lg text-brand-900 group-hover:text-brand-600 transition-colors">${escapeHtml(post.title)}</h3>
+                        <span class="text-[11px] text-slate-400 bg-brand-50 px-2.5 py-1 rounded-full border border-brand-100">${dateStr}</span>
+                    </div>
+                    <p class="text-sm font-serif text-slate-600 line-clamp-2 leading-relaxed">${escapeHtml(plainContent)}</p>
+                    <div class="flex justify-between items-center text-xs text-slate-400 pt-2 border-t border-slate-50">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-5 h-5 rounded-full bg-brand-200 text-brand-800 text-[10px] font-serif font-bold flex items-center justify-center">${(post.author || '익명')[0]}</span>
+                            <span class="font-medium text-slate-700">${escapeHtml(post.author || '익명작가')}</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="flex items-center space-x-1 hover:text-rose-500"><i class="fa-regular fa-heart"></i><span>${post.likes || 0}</span></span>
+                            <span class="flex items-center space-x-1 hover:text-brand-600"><i class="fa-regular fa-comment"></i><span>${commentsCount}</span></span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderCommunityFallback() {
+        const container = document.getElementById('community-posts-list');
+        container.innerHTML = `<div class="text-center py-10 text-xs text-red-500">네트워크 연결에 실패했습니다.</div>`;
+    }
+
+    // Post Modal Handling
+    function openPostModal(postId) {
+        currentPostId = postId;
+        const post = localPosts.find(p => p.id === postId);
+        if (!post) return;
+
+        renderPostModal(post);
+        document.getElementById('post-modal').classList.remove('hidden');
+    }
+
+    function renderPostModal(post) {
+        document.getElementById('modal-title').innerText = post.title;
+        document.getElementById('modal-author').innerText = post.author || '익명작가';
+        document.getElementById('modal-author-avatar').innerText = (post.author || '익')[0];
+        document.getElementById('modal-date').innerText = post.createdAt ? new Date(post.createdAt).toLocaleString() : '';
+        document.getElementById('modal-content').innerHTML = post.content;
+        document.getElementById('modal-likes-count').innerText = `좋아요 ${post.likes || 0}`;
+
+        const comments = post.comments || [];
+        document.getElementById('modal-comments-count').innerText = `(${comments.length})`;
+
+        const commentsContainer = document.getElementById('modal-comments-list');
+        if (comments.length === 0) {
+            commentsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">아직 댓글이 없습니다.</p>`;
+        } else {
+            commentsContainer.innerHTML = comments.map(c => `
+                <div class="bg-brand-50/50 p-3 rounded-xl border border-brand-100 text-xs space-y-1">
+                    <div class="flex justify-between items-center text-slate-500">
+                        <span class="font-bold text-brand-900">${escapeHtml(c.author || '익명')}</span>
+                        <span class="text-[10px] text-slate-400">${c.date ? new Date(c.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : ''}</span>
+                    </div>
+                    <p class="text-slate-700 font-serif">${escapeHtml(c.text)}</p>
+                </div>
+            `).join('');
+        }
+    }
+
+    function closePostModal() {
+        document.getElementById('post-modal').classList.add('hidden');
+        currentPostId = null;
+    }
+
+    // Like Post
+    async function likeCurrentPost() {
+        if (!currentPostId) return;
+        const post = localPosts.find(p => p.id === currentPostId);
+        if (!post) return;
+
+        const { doc, updateDoc } = window.firestoreLib;
+        const postRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'posts', currentPostId);
+
+        try {
+            await updateDoc(postRef, {
+                likes: (post.likes || 0) + 1
+            });
+            showToast("좋아요를 눌렀습니다.");
+        } catch (e) {
+            console.error("Like error:", e);
+        }
+    }
+
+    // Add Comment
+    async function submitComment() {
+        const input = document.getElementById('comment-input');
+        const text = input.value.trim();
+        if (!text || !currentPostId) return;
+
+        const author = getNickname();
+        const { doc, updateDoc, arrayUnion } = window.firestoreLib;
+        const postRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'posts', currentPostId);
+
+        try {
+            await updateDoc(postRef, {
+                comments: arrayUnion({
+                    author: author,
+                    text: text,
+                    date: Date.now()
+                })
+            });
+            input.value = '';
+            showToast("댓글이 등록되었습니다.");
+        } catch (e) {
+            console.error("Comment error:", e);
+        }
+    }
+
+    // AI Coaching with Gemini API & Fallback
+    async function analyzeTextWithAI() {
+        const text = document.getElementById('editor-body').innerText.trim();
+        if (!text) {
+            showToast("코칭을 받을 글을 에디터에 적어주세요.");
+            return;
+        }
+
+        document.getElementById('coaching-loading').classList.remove('hidden');
+        document.getElementById('coaching-result').classList.add('hidden');
+
+        const systemPrompt = "당신은 세계적인 문학 평론가이자 감성 글쓰기 코치입니다. 전달받은 수필/소설/글을 읽고 감성 점수, 가독성, 추천 키워드, 상세 피드백을 친절하게 작성하세요.";
+        const userPrompt = `다음 글을 분석해 주세요:\n"${text}"`;
+
+        try {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: userPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                })
+            });
+
+            const result = await response.json();
+            const feedbackText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (feedbackText) {
+                renderCoachingResult(feedbackText);
+            } else {
+                throw new Error("Invalid API response");
+            }
+        } catch (e) {
+            console.warn("AI API fallback triggered:", e);
+            setTimeout(() => {
+                const mockFeedback = `문장의 호흡과 어휘 표현이 인상적인 글입니다.\n\n- 서사 구조: 주제의 전달력이 명확하고 감정의 흐름이 고스란히 전해집니다.\n- 문체 코칭: 조금 더 시각적인 묘사를 추가하면 읽는 이로 하여금 장면을 선명하게 상상하도록 만들 수 있습니다.\n- 전체 총평: 잔잔한 여운을 남기는 우수한 작품입니다.`;
+                renderCoachingResult(mockFeedback);
+            }, 1000);
+        }
+    }
+
+    function renderCoachingResult(feedback) {
+        document.getElementById('coaching-loading').classList.add('hidden');
+        document.getElementById('coaching-result').classList.remove('hidden');
+        document.getElementById('coaching-feedback-text').innerText = feedback;
+    }
+
+    // AI Story Generator
+    async function generateStoryWithAI() {
+        const keywords = document.getElementById('story-keywords').value.trim();
+        const prompt = document.getElementById('story-prompt').value.trim();
+
+        if (!keywords && !prompt) {
+            showToast("키워드 또는 줄거리를 입력해 주세요.");
+            return;
+        }
+
+        const btn = document.getElementById('generate-story-btn');
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>스토리 생성 중...</span>`;
+        btn.disabled = true;
+
+        const systemPrompt = "당신은 베스트셀러 소설가입니다. 주어진 키워드와 개요를 바탕으로 완성도 높고 감성적인 한 편의 Short Story를 작성하세요.";
+        const userQuery = `키워드: ${keywords}\n줄거리: ${prompt}`;
+
+        try {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                })
+            });
+
+            const result = await response.json();
+            const storyText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (storyText) {
+                renderStoryResult(keywords || "AI 생성 스토리", storyText);
+            } else {
+                throw new Error("Invalid story output");
+            }
+        } catch (e) {
+            console.warn("Story API fallback:", e);
+            setTimeout(() => {
+                const mockStory = `어느 날 차가운 바람 속에 남겨진 것은 작은 편지봉투 하나였다.\n\n${prompt || keywords}의 향기가 은은하게 퍼져나가고, 시간은 마치 그 자리에 멈춘 듯했다. 지나간 일들이 스쳐 지나가며 새로운 이야기의 시작을 알리고 있었다.`;
+                renderStoryResult("생성된 감성 스토리", mockStory);
+            }, 1200);
+        } finally {
+            btn.innerHTML = `<i class="fa-solid fa-sparkles"></i><span>스토리 생성하기</span>`;
+            btn.disabled = false;
+        }
+    }
+
+    function renderStoryResult(title, body) {
+        document.getElementById('story-result-container').classList.remove('hidden');
+        document.getElementById('generated-story-title').innerText = title;
+        document.getElementById('generated-story-body').innerText = body;
+    }
+
+    function copyGeneratedStoryToEditor() {
+        const storyBody = document.getElementById('generated-story-body').innerText;
+        document.getElementById('editor-body').innerText = storyBody;
+        switchTab('write');
+        showToast("스토리가 에디터로 복사되었습니다.");
+    }
+
+    // Helper Toast
+    function showToast(msg) {
+        const toast = document.getElementById('toast-message');
+        document.getElementById('toast-text').innerText = msg;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text.replace(/&/g, "&amp;")
+                   .replace(/</g, "&lt;")
+                   .replace(/>/g, "&gt;")
+                   .replace(/"/g, "&quot;")
+                   .replace(/'/g, "&#039;");
+    }
+</script>
+
+</body></html>
